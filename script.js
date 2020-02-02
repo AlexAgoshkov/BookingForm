@@ -1,43 +1,57 @@
 let myRadio = document.querySelectorAll('.myRadio');
-let myText = document.querySelectorAll('.myText');
+let myArriveDate = document.querySelectorAll('.Arrive');
 let myLables = document.querySelector('.totalPrice');
-let myTextSecond = document.querySelectorAll('.myText2');
+let myDateLeave = document.querySelectorAll('.Leave');
+let myPrice = document.querySelectorAll('.priceLabel');
+
+Start();
+
+function ChangeValue(type, value){
+   
+   if (type.nodeName == 'INPUT') {
+    type.value = value;
+   }
+   if (type.nodeName == 'LABEL') {
+    type.textContent = value;
+   }
+}
 
 function Start(){
-    let a;
-    let result1 = 0;
-    let result2 = 0;
+    let result1;
+    let result2;
+    let totalResult;
+    let currentRes;
+
      for (let i = 0; i < myRadio.length; i++) {
         const element = myRadio[i];
         element.addEventListener('click', function(){
-            myText[i].oninput = book;
-            myTextSecond[i].oninput = book;  
+            currentRes = myPrice[i].textContent; 
+            myArriveDate[i].oninput = book;
+            myDateLeave[i].oninput = book;
         });
     }
     
     function book(){
-        a = this.value;
-        let one = GetDaysCount(a);
-        if (one <= 1) {
+       let elem = this.value;
+        let name = this.className;
+        let daysCount = GetDaysCount(elem);
+        if (daysCount <= 1) {
             myLables.textContent = '';
             return;    
         }
-        if (a.className = 'myText') {
-            result1 = one * 1;
+        if (name == "Arrive") {
+            result1 = daysCount;
         }
         else
         {
-            result2 = one * 1;
+            result2 = daysCount;
         }
-       
-        let abc = result2 - result1; 
-        console.log(abc);   
-        
-        
-        // if (abc > 1) {
-        //     myLables.textContent = abc;    
-        // }
-        
+          let result = result2 - result1;
+          totalResult = result * +currentRes;
+
+         if (result > 1) {
+             ChangeValue(myLables, totalResult);    
+         }
     }
    
     function GetDaysCount(value){       
@@ -49,10 +63,4 @@ function Start(){
             return 0;
         }
     }
-   
 }
-
-Start();
-
-//console.dir(myText);
-
